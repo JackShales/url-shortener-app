@@ -10,11 +10,42 @@ class LinksController < ApplicationController
   end
 
   def create
-    link = Link.new(
+    @link = Link.new(
       slug: params[:slug],
       target_url: params[:target]
     )
-    link.save
+    if @link.save
+      redirect_to '/links'
+    else
+      render 'new.html.erb'
+    end
+  end
+
+  def show
+    @link = Link.find_by(id: params[:id])
+    render 'show.html.erb'
+  end
+
+  def edit
+    @link = Link.find_by(id: params[:id])
+    render 'edit.html.erb'
+  end
+
+  def update
+    @link = Link.find_by(id: params[:id])
+    if @link.update(
+      slug: params[:slug],
+      target_url: params[:target]
+    )
+      redirect_to "/links/#{@link.id}"
+    else
+      render 'edit.html.erb'
+    end
+  end
+
+  def destroy
+    @link = Link.find_by(id: params[:id])
+    @link.destroy
     redirect_to '/links'
   end
 end
