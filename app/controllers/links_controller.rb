@@ -1,6 +1,8 @@
 class LinksController < ApplicationController
+  before_action :authenticate_user!
+
   def index
-    @links = Link.all
+    @links = Link.where(user_id: current_user.id)
     render 'index.html.erb'
   end
 
@@ -12,7 +14,8 @@ class LinksController < ApplicationController
   def create
     @link = Link.new(
       slug: params[:slug],
-      target_url: params[:target]
+      target_url: params[:target],
+      user_id: current_user.id
     )
     if @link.save
       redirect_to '/links'
@@ -23,19 +26,28 @@ class LinksController < ApplicationController
 
   def show
     @link = Link.find_by(id: params[:id])
-    render 'show.html.erb'
+    if current_user.id == @link.user_id
+      render 'show.html.erb'
+    else
+      redirect_to '/links'
+    end
   end
 
   def edit
     @link = Link.find_by(id: params[:id])
-    render 'edit.html.erb'
+    if current_user.id == @link.user_id
+      render 'edit.html.erb'
+    else
+      redirect_to '/links'
+    end
   end
 
   def update
     @link = Link.find_by(id: params[:id])
     if @link.update(
       slug: params[:slug],
-      target_url: params[:target]
+      target_url: params[:target],
+      user_id: current_user.id
     )
       redirect_to "/links/#{@link.id}"
     else

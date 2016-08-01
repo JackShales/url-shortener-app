@@ -1,16 +1,26 @@
 <h1>Your links</h1>
 
+<h5><a href="/links/new">Create new link</a></h5>
+
 <table>
   <tr>
     <th>Slug</th>
     <th>Target URL</th>
     <th>Created At</th>
   </tr>
+  
   <% @links.each do |link| %>
     <tr>
-      <td><%= link.slug %></td>
+      <td><a href="/links/<%= link.id %>"><%= link.slug %></a></td>
       <td><%= link.target_url %></td>
       <td><%= link.created_at %></td>
+      <td><a href="/links/<%= link.id %>/edit">Edit this link</a></td>
     </tr>
   <% end %>
 <table>
+
+<%= form_tag "/users/sign_out", method: :delete do %>
+  <div>
+<%= submit_tag "Log Out" %>
+  </div>
+<% end %>

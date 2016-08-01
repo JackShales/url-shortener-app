@@ -1,2 +1,8 @@
 <h1>Link Stats for <%= @link.slug %></h1>
 <h3>Visits: <%= @link.visit_count %></h3>
+
+<%= form_tag "/links/#{@link.id}", method: :delete do %>
+  <div>
+<%= submit_tag "Delete Link" %>
+  </div>
+<% end %>
