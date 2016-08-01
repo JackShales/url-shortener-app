@@ -26,7 +26,7 @@
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#">Link</a></li>
+          <li><a href="/links/new">Create new link</a></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="options-nav">Options<b class="caret"></b></a>
             <ul class="dropdown-menu">
@@ -38,7 +38,7 @@
               <% if current_user %>
                 <li><a href="/users/edit">Edit Profile</a></li>
                 <li class="divider"></li>
-                <li><a href="/users/sign_out" id="sign_out_link">Sign Out</a></li>
+                <li><%= link_to("Sign Out", '/users/sign_out', method: :delete)%></li>
               <% end %>
             </ul>
           </li>
